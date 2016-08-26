@@ -1,0 +1,29 @@
+import string
+from collections import Counter
+
+
+def preprocessing(text):
+    exclude = set(string.punctuation)
+    text = ''.join(ch for ch in text if ch not in exclude)
+    text = text.replace("\n","")
+    return text
+
+def bigrams(text):
+    bigrams_list =  zip(text.split(" ")[:-1], text.split(" ")[1:])
+    return bigrams_list
+
+def collocations_ranking_using_lists(bigrams_list,word):
+    counts = list(Counter(bigrams_list).items())
+    counts.sort(key=lambda tup:tup[1],reverse=True)
+    for each in counts:
+        if each[0][0] == word:
+            print each[0][1]
+
+def collocations(word):
+    text = '''My name is gopal. His name is John. I like my name very much.'''
+    text = preprocessing(text)
+    bigrams_list = bigrams(text)
+    #collocations_ranking(bigrams_list,word)
+    collocations_ranking_using_lists(bigrams_list,word)
+
+    
